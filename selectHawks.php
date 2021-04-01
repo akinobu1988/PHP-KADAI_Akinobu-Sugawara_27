@@ -23,19 +23,19 @@ if ($status == false) {
     //Selectデータの数だけ自動でループしてくれる
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $view .= '<tr><td>'. h($result['選手名']) . '</td></tr>';
-        $view2 .= '<tr><td>'. h($result['チーム名']) . '</td></tr>';
-        $view3 .= '<tr><td>'. h($result['ポジション']). '</td></tr>';
-        $view4 .= '<tr><td>'. h($result['誕生日']) . '</td></tr>';
-        $view5 .= '<tr><td>'. h($result['年齢']) . '</td></tr>';
-        $view6 .= '<tr><td>'. h($result['身長']). '</td></tr>';        
-        $view7 .= '<tr><td>'. h($result['体重']) . '</td></tr>';
-        $view8 .= '<tr><td>'. h($result['出身地']) . '</td></tr>';
-        $view9 .= '<tr><td>'. h($result['投打']). '</td></tr>';
-        $view10 .= '<tr><td>'. h($result['血液型']). '</td></tr>';        
-        $view11 .= '<tr><td>'. h($result['ドラフト年度']) . '</td></tr>';
-        $view12 .= '<tr><td>'. h($result['経歴']) . '</td></tr>';
-        $view13 .= '<tr><td>'. h($result['獲得タイトル']). '</td></tr>';
+      $view .= '<tr><td>'. h($result['選手名']) . '</td>';
+      $view .= '<td>'. h($result['チーム名']) . '</td>';
+      $view .= '<td>'. h($result['ポジション']) . '</td>';
+      $view .= '<td>'. h($result['誕生日']) . '</td>';
+      $view .= '<td>'. h($result['年齢']) . '</td>';
+      $view .= '<td>'. h($result['身長']) . '</td>';
+      $view .= '<td>'. h($result['体重']) . '</td>';
+      $view .= '<td>'. h($result['出身地']) . '</td>';
+      $view .= '<td>'. h($result['投打']) . '</td>';
+      $view .= '<td>'. h($result['血液型']) . '</td>';
+      $view .= '<td>'. h($result['ドラフト年度']) . '</td>';
+      $view .= '<td>'. h($result['経歴']) . '</td>';
+      $view .= '<td>'. h($result['獲得タイトル']) . '</td></tr>';
     }
 }
 ?>
@@ -59,7 +59,7 @@ if ($status == false) {
     <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">検索</a>
+        <a class="navbar-brand" href="index.php">検索ワード：ホークス</a>
         </div>
     </div>
     </nav>
@@ -89,18 +89,6 @@ if ($status == false) {
     </tr>
     <tr>
       <td><?php echo $view; ?></td>
-      <td><?php echo $view2; ?></td>
-      <td><?php echo $view3; ?></td>
-      <td><?php echo $view4; ?></td>
-      <td><?php echo $view5; ?></td>
-      <td><?php echo $view6; ?></td>
-      <td><?php echo $view7; ?></td>
-      <td><?php echo $view8; ?></td>
-      <td><?php echo $view9; ?></td>
-      <td><?php echo $view10; ?></td>
-      <td><?php echo $view11; ?></td>
-      <td><?php echo $view12; ?></td>
-      <td><?php echo $view13; ?></td>
     </tr>
 
 <!-- Main[End] -->
