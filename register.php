@@ -10,6 +10,51 @@
             padding: 10px;
             font-size: 16px;
         }
+
+        .navbar-brand {
+            font-size: 30px;
+            font-family: bold;
+        }
+
+        .container-fluid {
+            background-color: black;
+        }
+
+        .register {
+            margin-top: 0;
+            margin-bottom: 30px;
+            margin-left: 15px;
+        }
+
+        .team, .birth, .age, .height, .weight, .pref, .carrer, .register, .player, .postion {
+            margin-bottom: 15px;
+            margin-left: 15px;
+        }
+
+        .type, .draft, .title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .register {
+            margin-top: 10px;
+        }
+
+        .prefSelect {
+            background-color: black; 
+            padding-left: 15px;
+            padding-top: 15px; 
+            padding-bottom: 15px; 
+        }
+
+        .teamSelect {
+            background-color: black; 
+            padding-left: 15px;
+            color: white; 
+            padding-top: 15px; 
+            padding-bottom: 15px; 
+        }
+
     </style>
 </head>
 
@@ -19,7 +64,9 @@
     <header>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header"><a class="navbar-brand" href="select.php">選手名鑑</a></div>
+                <div class="navbar-header">
+                    <h1 class="navbar-brand" >〜パ・リーグの全てがここにある〜 PLAYER SEARCH</h1>
+                </div>
             </div>
         </nav>
     </header>
@@ -28,10 +75,10 @@
     <!-- Main[Start] -->
     <form method="post" action="insert2.php">
         <div class="jumbotron">
-            <h3>登録フォーム</h3>
-            <label>選手名：<input type="text" name="name"></label>
+            <u><h3 class="register">登録フォーム</h3></u>
+            <label class="player">選手名：<input type="text" name="name"></label>
             <br>
-            <label>チーム名：
+            <label class="team">チーム名：
               <select name="team">
                 <option value="" selected>チーム名</option>
                 <option value="北海道日本ハムファイターズ">北海道日本ハムファイターズ</option>
@@ -43,7 +90,7 @@
               </select>
             </label>
             <br>
-            <label>ポジション：
+            <label class="postion">ポジション：
               <select name="position">
                 <option value="" selected>ポジション</option>
                 <option value="投手">投手</option>
@@ -53,11 +100,11 @@
               </select>
             </label>
             <br>
-            <label>誕生日：
+            <label class="birth">誕生日：
               <input type="date" name="birth">
             </label>
             <br>
-            <label>年齢：
+            <label class="age">年齢：
               <select name="age">
                   <option selected>年齢</option>
                   <option value="18歳">18歳</option>
@@ -85,7 +132,7 @@
               </select>
             </label>
             <br>
-            <label>身長：
+            <label class="height">身長：
               <select name="height">
                 <option value="" selected>身長</option>
                 <option value="160cm">160cm</option>
@@ -131,7 +178,7 @@
             </select>
             </label>
             <br>
-            <label for="">体重：
+            <label class="weight">体重：
             <select name="weight">
                 <option value="" selected>体重</option>
                 <option value="60kg">60kg</option>
@@ -177,7 +224,7 @@
             </select>
             </label>
             <br>
-            <label for="">出身地：
+            <label class="pref">出身地：
             <select name="pref">
                 <option value="" selected>都道府県</option>
                 <option value="北海道">北海道</option>
@@ -229,7 +276,7 @@
                 <option value="沖縄県">沖縄県</option>
             </select>
             <br>
-            <label for="">投打：
+            <label class="type">投打：
             <select name="type">
                 <option value="" selected>投打</option>
                 <option value="右投げ/右打ち">右投げ/右打ち</option>
@@ -241,7 +288,7 @@
             </select>
             </label>
             <br>
-            <label for="">血液型：
+            <label class="blood">血液型：
             <select name="blood">
                 <option value="" selected>血液型</option>
                 <option value="A型">A型</option>
@@ -251,7 +298,7 @@
             </select>
             </label>
             <br>
-            <label for="">ドラフト年度：
+            <label class="draft">ドラフト年度：
             <select name="draft">
                 <option value="2000年">2000年</option>
                 <option value="2001年">2001年</option>
@@ -277,20 +324,20 @@
             </select>
             </label>
             <br>
-            <label>経歴<input type="text" name="carrer"></label>
+            <label class="career">経歴<input type="text" name="carrer"></label>
             <br>
-            <label>獲得タイトル <textarea name="title" cols="30" rows="3"></textarea></label>
+            <label class="title">獲得タイトル <textarea name="title" cols="30" rows="3"></textarea></label>
             <br>
-            <input type="submit" value="登録">
+            <input type="submit" value="登録" class="register">
         </div>
-        <h3>チームで検索</h3>
+        <h3 class="teamSelect">チームで検索</h3>
         <a href="selectFighters.php"><img src="img/fighters.png" alt=""></a>
         <a href="selectEagles.php"><img src="img/eagles.png" alt=""></a>
         <a href="selectLions.php"><img src="img/lions.png" alt=""></a>
         <a href="selectMarines.php"><img src="img/marines.png" alt=""></a>
         <a href="selectOrix.php"><img src="img/orix.png" alt=""></a>
         <a href="selectHawks.php"><img src="img/hawks.png" alt=""></a>
-        <h3><a href="map.html">出身地で検索</a></h3>
+        <h3 class="prefSelect"><a href="map.html">出身地で検索</a></h3>
     </form>
     <!-- Main[End] -->
 </body>
