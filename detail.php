@@ -1,3 +1,43 @@
+<?php
+//１．PHP
+//select.phpのPHP部分コードをマルっとコピーしてきます。
+//※SQLとデータ取得の箇所を修正、GETの内容をSELECTする！
+
+require_once("funcs.php");
+$id = $_GET['id'];
+
+//1.  DB接続します
+try {
+  //ID:'root', Password: 'root'
+  $pdo = new PDO('mysql:dbname=pacificleague_player;charset=utf8;host=localhost','root','root');
+} catch (PDOException $e) {
+  exit('DBConnectError:'.$e->getMessage());
+}
+
+//２．データ取得SQL作成
+$stmt = $pdo->prepare('SELECT * FROM gs_bm_table WHERE id=' . $id . ';');
+$status = $stmt->execute();
+
+//３．データ表示
+$view = "";
+if ($status == false) {
+    //execute（SQL実行時にエラーがある場合）
+    $error = $stmt->errorInfo();
+    exit('ErrorQuery:' . print_r($error, true));
+}else{
+    $result = $stmt->fetch();
+}
+?>
+
+<!--
+２．HTML
+以下にindex.phpのHTMLをまるっと貼り付ける！
+(入力項目は「登録/更新」はほぼ同じになるから)
+※form要素 input type="hidden" name="id" を１項目追加（非表示項目）
+※form要素 action="update.php"に変更
+※input要素 value="ここに変数埋め込み"
+-->
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -94,10 +134,10 @@
     <!-- Head[End] -->
 
     <!-- Main[Start] -->
-    <form method="post" action="insert2.php">
+    <form method="post" action="update.php">
         <div class="jumbotron">
             <u><h3 class="register">登録フォーム</h3></u>
-            <label class="player">選手名：<input type="text" name="name"></label>
+            <label class="player">選手名：<input type="text" name="name" value="<?= $result['name'] ?>"></label>
             <br>
             <label class="team">チーム名：
               <select name="team">
@@ -345,25 +385,14 @@
             </select>
             </label>
             <br>
-            <label class="career">経歴<input type="text" name="carrer"></label>
+            <label class="career">経歴<input type="text" name="carrer" value="<?= $result['carrer'] ?>"></label>
             <br>
-            <label class="title">獲得タイトル <textarea name="title" cols="30" rows="3"></textarea></label>
+            <label class="title">獲得タイトル <textarea name="title" cols="30" rows="3">value="<?= $result['title'] ?>"</textarea></label>
             <br>
-            <input type="submit" value="登録" class="register">
+            <!-- インプットを追加 -->
+            <input type="hidden" name="id" value="<?= $result['id'] ?>">
+            <input type="submit" value="更新" class="register">
         </div>
-        <h3 class="teamSelect">チームで検索</h3>
-        <a href="selectFighters.php"><img src="img/fighters.png" alt=""></a>
-        <a href="selectEagles.php"><img src="img/eagles.png" alt=""></a>
-        <a href="selectLions.php"><img src="img/lions.png" alt=""></a>
-        <a href="selectMarines.php"><img src="img/marines.png" alt=""></a>
-        <a href="selectOrix.php"><img src="img/orix.png" alt=""></a>
-        <a href="selectHawks.php"><img src="img/hawks.png" alt=""></a>
-        <h3 class="prefSelect"><a href="map.html">出身地で検索</a></h3>
-    </form>
-    <form action="select.php" method="post">
-        <h3 class="freeSearch">フリーワードで検索</h3>
-        <input type="search" name="search" placeholder="フリーワードで選手を検索" value autocomplete="off" class="playerSearch">
-        <input type="submit" value="検索" class="">
     </form>
     <!-- Main[End] -->
 </body>

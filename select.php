@@ -1,5 +1,6 @@
 <?php
 require_once("funcs.php");
+$search = $_POST["search"];
 
 //1.  DB接続します
 try {
@@ -10,7 +11,7 @@ try {
 }
 
 //２．データ取得SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE チーム名 = '北海道日本ハムファイターズ';");
+$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE 選手名 LIKE "%$search%" AND チーム名 LIKE "%$search%" AND ポジション LIKE "%$search%" AND 誕生日 LIKE "%$search%" AND 年齢 LIKE "%$search%" AND 身長 LIKE "%$search%" AND 体重 LIKE "%$search%" AND 出身地 LIKE "%$search%" AND 投打 LIKE "%$search%" AND 血液型 LIKE "%$search%" AND ドラフト年度 LIKE "%$search%" AND 経歴 LIKE "%$search%" AND 獲得タイトル LIKE "%$search%";");
 $status = $stmt->execute();
 
 //３．データ表示
@@ -23,7 +24,6 @@ if ($status == false) {
     //Selectデータの数だけ自動でループしてくれる
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-      $view .= '<a href="detail.php?id=' . h($result['id']) . '">';
       $view .= '<tr><td>'. h($result['選手名']) . '</td>';
       $view .= '<td>'. h($result['チーム名']) . '</td>';
       $view .= '<td>'. h($result['ポジション']) . '</td>';
@@ -36,12 +36,7 @@ if ($status == false) {
       $view .= '<td>'. h($result['血液型']) . '</td>';
       $view .= '<td>'. h($result['ドラフト年度']) . '</td>';
       $view .= '<td>'. h($result['経歴']) . '</td>';
-      $view .= '<td>'. h($result['獲得タイトル']) . '</td></tr>'; 
-      $view .= '</a>';
-
-      $view .= '<a href="delete.php?id=' . $result['id'] . '">';
-      $view .= '[削除]';
-      $view .= '</a>';
+      $view .= '<td>'. h($result['獲得タイトル']) . '</td></tr>';
     }
 }
 ?>
@@ -54,7 +49,7 @@ if ($status == false) {
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ファイターズ</title>
+<title>フリーワード検索</title>
 <link rel="stylesheet" href="css/range.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>div{padding: 10px;font-size:16px;}</style>
@@ -65,7 +60,7 @@ if ($status == false) {
     <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">検索ワード：ファイターズ</a>
+        <a class="navbar-brand" href="index.php">検索ワード：</a>
         </div>
     </div>
     </nav>
@@ -93,8 +88,7 @@ if ($status == false) {
       <th>経歴</th>
       <th>獲得タイトル</th>
     </tr>
-    <tr>
-      <a href="detail.php"></a>
+    </tr>  
       <td><?php echo $view; ?></td>
     </tr>
 
