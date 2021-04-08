@@ -23,7 +23,6 @@ if ($status == false) {
     //Selectデータの数だけ自動でループしてくれる
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-      $view .= '<a href="detail.php?id=' . h($result['id']) . '">';
       $view .= '<tr><td>'. h($result['選手名']) . '</td>';
       $view .= '<td>'. h($result['チーム名']) . '</td>';
       $view .= '<td>'. h($result['ポジション']) . '</td>';
@@ -36,12 +35,9 @@ if ($status == false) {
       $view .= '<td>'. h($result['血液型']) . '</td>';
       $view .= '<td>'. h($result['ドラフト年度']) . '</td>';
       $view .= '<td>'. h($result['経歴']) . '</td>';
-      $view .= '<td>'. h($result['獲得タイトル']) . '</td></tr>'; 
-      $view .= '</a>';
-
-      $view .= '<a href="delete.php?id=' . $result['id'] . '">';
-      $view .= '[削除]';
-      $view .= '</a>';
+      $view .= '<td>'. h($result['獲得タイトル']) . '</td>';
+      $view .= '<td><a href="remind.html?id=' . $result['id'] . '">'. 削除 .  '</a></td>';
+      $view .= '<td><a href="detail.php?id=' . $result['id'] . '">'. 編集 .  '</a></td></tr>';
     }
 }
 ?>
@@ -92,11 +88,14 @@ if ($status == false) {
       <th>ドラフト年度</th>
       <th>経歴</th>
       <th>獲得タイトル</th>
+      <th>作業１</th>
+      <th>作業２</th>
     </tr>
     <tr>
       <a href="detail.php"></a>
       <td><?php echo $view; ?></td>
     </tr>
+
 
 <!-- Main[End] -->
 

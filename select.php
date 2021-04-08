@@ -11,7 +11,7 @@ try {
 }
 
 //２．データ取得SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE 選手名 LIKE "%$search%" AND チーム名 LIKE "%$search%" AND ポジション LIKE "%$search%" AND 誕生日 LIKE "%$search%" AND 年齢 LIKE "%$search%" AND 身長 LIKE "%$search%" AND 体重 LIKE "%$search%" AND 出身地 LIKE "%$search%" AND 投打 LIKE "%$search%" AND 血液型 LIKE "%$search%" AND ドラフト年度 LIKE "%$search%" AND 経歴 LIKE "%$search%" AND 獲得タイトル LIKE "%$search%";");
+$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE 選手名 LIKE '%" . $search . "%' OR チーム名 LIKE '%" . $search . "%' OR ポジション LIKE '%" . $search . "%' OR 誕生日 LIKE '%" . $search . "%' OR 年齢 LIKE '%" . $search . "%' OR 身長 LIKE '%" . $search . "%' OR 体重 LIKE '%" . $search . "%' OR 出身地 LIKE '%" . $search . "%' OR 投打 LIKE '%" . $search . "%' OR 血液型 LIKE '%" . $search . "%' OR ドラフト年度 LIKE '%" . $search . "%' OR 経歴 LIKE '%" . $search . "%' OR 獲得タイトル LIKE '%" . $search . "%';");
 $status = $stmt->execute();
 
 //３．データ表示
@@ -36,7 +36,9 @@ if ($status == false) {
       $view .= '<td>'. h($result['血液型']) . '</td>';
       $view .= '<td>'. h($result['ドラフト年度']) . '</td>';
       $view .= '<td>'. h($result['経歴']) . '</td>';
-      $view .= '<td>'. h($result['獲得タイトル']) . '</td></tr>';
+      $view .= '<td>'. h($result['獲得タイトル']) . '</td>';
+      $view .= '<td><a href="remind.html?id=' . $result['id'] . '">'. 削除 .  '</a></td>';
+      $view .= '<td><a href="detail.php?id=' . $result['id'] . '">'. 編集 .  '</a></td></tr>';
     }
 }
 ?>
@@ -60,7 +62,7 @@ if ($status == false) {
     <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">検索ワード：</a>
+        <a class="navbar-brand" href="index.php">検索ワード：<?php echo $search; ?></a>
         </div>
     </div>
     </nav>
@@ -87,6 +89,8 @@ if ($status == false) {
       <th>ドラフト年度</th>
       <th>経歴</th>
       <th>獲得タイトル</th>
+      <th>作業１</th>
+      <th>作業２</th>
     </tr>
     </tr>  
       <td><?php echo $view; ?></td>

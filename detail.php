@@ -43,7 +43,7 @@ if ($status == false) {
 
 <head>
     <meta charset="UTF-8">
-    <title>選手名鑑</title>
+    <title>編集画面</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
         div {
@@ -126,7 +126,7 @@ if ($status == false) {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <h1 class="navbar-brand" >〜パ・リーグの全てがここにある〜 PLAYER SEARCH</h1>
+                    <h1 class="navbar-brand" >編集画面</h1>
                 </div>
             </div>
         </nav>
@@ -136,7 +136,7 @@ if ($status == false) {
     <!-- Main[Start] -->
     <form method="post" action="update.php">
         <div class="jumbotron">
-            <u><h3 class="register">登録フォーム</h3></u>
+            <u><h3 class="register">再登録フォーム</h3></u>
             <label class="player">選手名：<input type="text" name="name" value="<?= $result['name'] ?>"></label>
             <br>
             <label class="team">チーム名：
@@ -387,7 +387,7 @@ if ($status == false) {
             <br>
             <label class="career">経歴<input type="text" name="carrer" value="<?= $result['carrer'] ?>"></label>
             <br>
-            <label class="title">獲得タイトル <textarea name="title" cols="30" rows="3">value="<?= $result['title'] ?>"</textarea></label>
+            <label class="title">獲得タイトル <textarea name="title" cols="30" rows="3"><?= $result['title'] ?></textarea></label>
             <br>
             <!-- インプットを追加 -->
             <input type="hidden" name="id" value="<?= $result['id'] ?>">

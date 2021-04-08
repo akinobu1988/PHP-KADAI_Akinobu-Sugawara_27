@@ -83,6 +83,6 @@ if($status==false){
   exit("ErrorMessage:". print_r($error, true));
 }else{
   //５．index.phpへリダイレクト
-  header('Location: selectFighters.php');
+  header('Location: register.php');
 }
 ?>
