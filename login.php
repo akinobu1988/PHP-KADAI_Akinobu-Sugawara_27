@@ -34,3 +34,4 @@ if (password_verify($_POST['pass'], $member['pass'])) {
 
 <h1><?php echo $msg; ?></h1>
 <?php echo $link; ?>
+
