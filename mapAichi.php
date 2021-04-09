@@ -19,26 +19,24 @@ if ($status == false) {
     //execute（SQL実行時にエラーがある場合）
     $error = $stmt->errorInfo();
     exit('ErrorQuery:' . print_r($error, true));
-}else{
-    //Selectデータの数だけ自動でループしてくれる
-    //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
-    while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-      $view .= '<tr><td>'. h($result['選手名']) . '</td>';
-      $view .= '<td>'. h($result['チーム名']) . '</td>';
-      $view .= '<td>'. h($result['ポジション']) . '</td>';
-      $view .= '<td>'. h($result['誕生日']) . '</td>';
-      $view .= '<td>'. h($result['年齢']) . '</td>';
-      $view .= '<td>'. h($result['身長']) . '</td>';
-      $view .= '<td>'. h($result['体重']) . '</td>';
-      $view .= '<td>'. h($result['出身地']) . '</td>';
-      $view .= '<td>'. h($result['投打']) . '</td>';
-      $view .= '<td>'. h($result['血液型']) . '</td>';
-      $view .= '<td>'. h($result['ドラフト年度']) . '</td>';
-      $view .= '<td>'. h($result['経歴']) . '</td>';
-      $view .= '<td>'. h($result['獲得タイトル']) . '</td>';
-      $view .= '<td><a href="remind.html?id=' . $result['id'] . '">'. 削除 .  '</a></td>';
-      $view .= '<td><a href="detail.php?id=' . $result['id'] . '">'. 編集 .  '</a></td></tr>';
-    }
+}else {
+  while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
+    $view .= '<tr><td>'. h($result['選手名']) . '</td>';
+    $view .= '<td>'. h($result['チーム名']) . '</td>';
+    $view .= '<td>'. h($result['ポジション']) . '</td>';
+    $view .= '<td>'. h($result['誕生日']) . '</td>';
+    $view .= '<td>'. h($result['年齢']) . '</td>';
+    $view .= '<td>'. h($result['身長']) . '</td>';
+    $view .= '<td>'. h($result['体重']) . '</td>';
+    $view .= '<td>'. h($result['出身地']) . '</td>';
+    $view .= '<td>'. h($result['投打']) . '</td>';
+    $view .= '<td>'. h($result['血液型']) . '</td>';
+    $view .= '<td>'. h($result['ドラフト年度']) . '</td>';
+    $view .= '<td>'. h($result['経歴']) . '</td>';
+    $view .= '<td>'. h($result['獲得タイトル']) . '</td>';
+    $view .= '<td><a href="remind.html?id=' . $result['id'] . '">'. 削除 .  '</a></td>';
+    $view .= '<td><a href="detail.php?id=' . $result['id'] . '">'. 編集 .  '</a></td></tr>';
+  }
 }
 ?>
 
