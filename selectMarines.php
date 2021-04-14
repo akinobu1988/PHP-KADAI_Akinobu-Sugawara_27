@@ -1,19 +1,21 @@
 <?php
+// SESSION開始！！
+session_start();
+
+//関数群の読み込み
 require_once("funcs.php");
 
-//1.  DB接続します
-try {
-  //ID:'root', Password: 'root'
-  $pdo = new PDO('mysql:dbname=pacificleague_player;charset=utf8;host=localhost','root','root');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
+//ログインチェックの関数を使う！
+loginCheck ();
 
-//２．データ取得SQL作成
+//DB接続
+$pdo = db_conn();
+
+//データ取得SQL作成
 $stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE チーム名 = '千葉ロッテマリーンズ';");
 $status = $stmt->execute();
 
-//３．データ表示
+//データ表示
 $view = "";
 if ($status == false) {
     //execute（SQL実行時にエラーがある場合）
@@ -94,7 +96,7 @@ if ($status == false) {
     <tr>
       <td><?php echo $view; ?></td>
     </tr>
-
+    <h3><a href="logout.php">ログアウト</a></h3>
 <!-- Main[End] -->
 
 </body>

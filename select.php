@@ -2,19 +2,14 @@
 require_once("funcs.php");
 $search = $_POST["search"];
 
-//1.  DB接続します
-try {
-  //ID:'root', Password: 'root'
-  $pdo = new PDO('mysql:dbname=pacificleague_player;charset=utf8;host=localhost','root','root');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
+//DB接続
+$pdo = db_conn();
 
-//２．データ取得SQL作成
+//データ取得SQL作成
 $stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE 選手名 LIKE '%" . $search . "%' OR チーム名 LIKE '%" . $search . "%' OR ポジション LIKE '%" . $search . "%' OR 誕生日 LIKE '%" . $search . "%' OR 年齢 LIKE '%" . $search . "%' OR 身長 LIKE '%" . $search . "%' OR 体重 LIKE '%" . $search . "%' OR 出身地 LIKE '%" . $search . "%' OR 投打 LIKE '%" . $search . "%' OR 血液型 LIKE '%" . $search . "%' OR ドラフト年度 LIKE '%" . $search . "%' OR 経歴 LIKE '%" . $search . "%' OR 獲得タイトル LIKE '%" . $search . "%';");
 $status = $stmt->execute();
 
-//３．データ表示
+//データ表示
 $view = "";
 if ($status == false) {
     //execute（SQL実行時にエラーがある場合）
@@ -95,8 +90,9 @@ if ($status == false) {
     </tr>  
       <td><?php echo $view; ?></td>
     </tr>
-
+    <h3><a href="logout.php">ログアウト</a></h3>
 <!-- Main[End] -->
 
 </body>
 </html>
+
