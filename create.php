@@ -1,48 +1,40 @@
 <?php
-/*
-【1】フォームで送信された値を$_POSTで受けて、それぞれ変数に代入
-【2】送信された値がすでにDBに登録されていないかのチェック
-→メールアドレスをWHEREの条件にしてSQLのSELECTを実行する
-$member = $stmt->fetch();で実行結果のデータを取り出す
-["name"]=> string(12) "田中太郎"のような配列で取り出される
-$member['カラム名']でそのカラムの値を取り出すことができる
-【3】登録されていなければINSERTでフォームで送信された値をDBに登録
-*/
+//関数群の読み込み
+require_once("funcs.php");
 
 //フォームからの値をそれぞれ変数に代入
 $name = $_POST['name'];
 $mail = $_POST['mail'];
+//パスワードのハッシュ化を実行
 $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-$dsn = "mysql:host=localhost; dbname=pacificleague_player; charset=utf8";
-$username = "root";
-$password = "root";
-try {
-    $dbh = new PDO($dsn, $username, $password);
-} catch (PDOException $e) {
-    $msg = $e->getMessage();
-}
 
-//フォームに入力されたmailがすでに登録されていないかチェック
-$sql = "SELECT * FROM users WHERE mail = :mail";
-$stmt = $dbh->prepare($sql);
-$stmt->bindValue(':mail', $mail);
-$stmt->execute();
-$member = $stmt->fetch();
-if ($member['mail'] === $mail) {
-    $msg = '同じメールアドレスが存在します。';
-    $link = '<a href="signup.php">戻る</a>';
-} else {
-    //登録されていなければinsert 
-    $sql = "INSERT INTO users(name, mail, pass) VALUES (:name, :mail, :pass)";
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindValue(':name', $name);
-    $stmt->bindValue(':mail', $mail);
-    $stmt->bindValue(':pass', $pass);
-    $stmt->execute();
+//DB接続
+$pdo = db_conn();
+
+//SQL文を用意
+$stmt = $pdo->prepare(
+    "INSERT INTO users(name, mail, pass) VALUES (:name, :mail, :pass)");
+
+//バインド変数を用意
+//Integer（数値の場合 PDO::PARAM_INT)
+$stmt->bindValue(':name', $name, PDO::PARAM_STR);  
+$stmt->bindValue(':mail', $mail, PDO::PARAM_STR); 
+$stmt->bindValue(':pass', $pass, PDO::PARAM_STR);  
+
+//実行
+$status = $stmt->execute();
+
+//データ登録処理後
+if($status==false){
+    //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
+    $error = $stmt->errorInfo();
+    exit("ErrorMessage:". print_r($error, true));
+  }else{
+    //５．login_form.phpへリダイレクト
     $msg = '会員登録が完了しました';
     $link = '<a href="login_form.php">ログインページ</a>';
-}
-?>
+  }
+  ?>
 
 <h1><?php echo $msg; ?></h1><!--メッセージの出力-->
 <?php echo $link; ?>
