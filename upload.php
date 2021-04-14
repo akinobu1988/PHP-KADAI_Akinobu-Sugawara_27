@@ -31,6 +31,15 @@ move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image); でデ�
 3. データベースの画像のファイル名を元に画像を表示させる
 */
 
+// SESSION開始！！
+session_start();
+
+//関数群の読み込み
+require_once("funcs.php");
+
+//ログインチェックの関数を使う！
+loginCheck ();
+
 $dsn = "mysql:host=localhost; dbname=pacificleague_player; charset=utf8";
 $username = "root";
 $password = "root";
@@ -39,7 +48,11 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-    if (isset($_POST['upload'])) {//送信ボタンが押された場合
+
+// echo(111);    
+// exit();
+
+if (isset($_POST['upload'])) {//送信ボタンが押された場合
         $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
         $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
         $file = "images/$image";
@@ -77,5 +90,6 @@ try {
             <input type="submit" name="upload" value="送信">
         </form>
     <?php endif;?>
+    <h3><a href="logout.php">ログアウト</a></h3>
 </body>
 </html>
