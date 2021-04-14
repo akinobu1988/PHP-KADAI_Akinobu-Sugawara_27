@@ -1,24 +1,20 @@
 <?php
-//１．PHP
-//select.phpのPHP部分コードをマルっとコピーしてきます。
-//※SQLとデータ取得の箇所を修正、GETの内容をSELECTする！
+//セッション開始する
+session_start();
 
+//POSTデータ取得
+$id = $_GET["id"];
+
+//DB接続します
 require_once("funcs.php");
-$id = $_GET['id'];
+loginCheck();
+$pdo = db_conn();
 
-//1.  DB接続します
-try {
-  //ID:'root', Password: 'root'
-  $pdo = new PDO('mysql:dbname=pacificleague_player;charset=utf8;host=localhost','root','root');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
-
-//２．データ取得SQL作成
+//データ取得SQL作成
 $stmt = $pdo->prepare('SELECT * FROM gs_bm_table WHERE id=' . $id . ';');
 $status = $stmt->execute();
 
-//３．データ表示
+//データ表示
 $view = "";
 if ($status == false) {
     //execute（SQL実行時にエラーがある場合）
@@ -393,6 +389,7 @@ if ($status == false) {
             <input type="hidden" name="id" value="<?= $result['id'] ?>">
             <input type="submit" value="更新" class="register">
         </div>
+        <h3><a href="logout.php">ログアウト</a></h3>
     </form>
     <!-- Main[End] -->
 </body>
