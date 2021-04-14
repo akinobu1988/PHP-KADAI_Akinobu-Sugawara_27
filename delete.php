@@ -1,17 +1,16 @@
 <?php
-//1. POSTデータ取得
-require_once('funcs.php');
-$id   = $_GET["id"];
+//セッション開始する
+session_start();
 
-//2. DB接続します
-try {
-  //ID:'root', Password: 'root'
-  $pdo = new PDO('mysql:dbname=pacificleague_player;charset=utf8;host=localhost','root','root');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
+//POSTデータ取得
+$id = $_GET["id"];
 
-//３．データ登録SQL作成
+//DB接続します
+require_once("funcs.php");
+loginCheck();
+$pdo = db_conn();
+
+//データ登録SQL作成
 //削除するときの注意点は、idの場所を特定すること！
 $stmt = $pdo->prepare(
   "DELETE FROM 
