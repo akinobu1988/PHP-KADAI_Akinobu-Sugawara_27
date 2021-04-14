@@ -1,16 +1,6 @@
 <?php
-
-/**
- * 1. index.phpのフォームの部分がおかしいので、ここを書き換えて、
- * insert2.phpにPOSTでデータが飛ぶようにしてください。
- * 2. insert2.phpで値を受け取ってください。
- * 3. 受け取ったデータをバインド変数に与えてください。
- * 4. register.phpフォームに書き込み、送信を行ってみて、実際にPhpMyAdminを確認してみてください！
- */
-
-//1. POSTデータ取得
-//$name = filter_input( INPUT_GET, ","name" ); //こういうのもあるよ
-//$email = filter_input( INPUT_POST, "email" ); //こういうのもあるよ
+//関数群の読み込み
+require_once("funcs.php");
 
 //POSTでデータ取得の準備をする
 $name = $_POST["name"];
@@ -26,21 +16,19 @@ $blood = $_POST["blood"];
 $draft = $_POST["draft"];
 $carrer = $_POST["carrer"];
 $title = $_POST["title"];
+$edit = $_POST[""];
+$delete = $_POST[""];
 
 //2. DB接続します
-try {
-  //ID:'root', Password: 'root'
-  $pdo = new PDO('mysql:dbname=pacificleague_player;charset=utf8;host=localhost','root','root');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
+//DB接続
+$pdo = db_conn();
 
 //３．データ登録SQL作成
 
 // 1. SQL文を用意
 $stmt = $pdo->prepare(
-  "INSERT INTO gs_bm_table(id, 選手名, チーム名, ポジション, 誕生日, 年齢, 身長, 体重, 出身地, 投打, 血液型, ドラフト年度, 経歴, 獲得タイトル)
-   VALUES(NULL, :name, :team, :postion, :birth, :age, :height, :weight, :pref, :type, :blood, :draft, :carrer, :title)"
+  "INSERT INTO gs_bm_table(id, 選手名, チーム名, ポジション, 誕生日, 年齢, 身長, 体重, 出身地, 投打, 血液型, ドラフト年度, 経歴, 獲得タイトル, 作業１, 作業２)
+   VALUES(NULL, :name, :team, :postion, :birth, :age, :height, :weight, :pref, :type, :blood, :draft, :carrer, :title, :edit, :delete)"
    );
 
 //  2. バインド変数を用意
@@ -58,6 +46,8 @@ $stmt->bindValue(':blood', $blood, PDO::PARAM_STR);
 $stmt->bindValue(':draft', $draft, PDO::PARAM_INT); 
 $stmt->bindValue(':carrer', $carrer, PDO::PARAM_STR);  
 $stmt->bindValue(':title', $title, PDO::PARAM_STR); 
+$stmt->bindValue(':edit', $edit, PDO::PARAM_STR);  
+$stmt->bindValue(':delete', $delete, PDO::PARAM_STR); 
 
 //  3. 実行
 $status = $stmt->execute();

@@ -1,3 +1,14 @@
+<?php
+// SESSION開始！！
+session_start();
+
+//関数群の読み込み
+require_once("funcs.php");
+
+//ログインチェックの関数を使う！
+loginCheck ();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -365,6 +376,7 @@
         <input type="search" name="search" placeholder="フリーワードで選手を検索" value autocomplete="off" class="playerSearch">
         <input type="submit" value="検索" class="">
     </form>
+    <h3><a href="logout.php">ログアウト</a></h3>
     <!-- Main[End] -->
 </body>
 
